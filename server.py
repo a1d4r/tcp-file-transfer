@@ -56,6 +56,7 @@ class FileTransferProtocol(asyncio.Protocol):
 
     def data_received(self, data):
         self.filewriter.write_buffer(data)
+        # self.transport.write(b'#')
 
     def connection_lost(self, data):
         self.filewriter.write()
