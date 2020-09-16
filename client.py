@@ -21,7 +21,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
     with open(FILEPATH, 'rb') as f:
         data = f.read()
 
-    sock.sendall((FILEPATH.name + '\n\n').encode())
+    sock.sendall((FILEPATH.name + '\n').encode())
     sock.sendall(data)
 
 print('File has been successfully transfered.')

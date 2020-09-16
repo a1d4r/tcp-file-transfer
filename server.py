@@ -9,7 +9,7 @@ FILES_DIR.mkdir(parents=True, exist_ok=True)
 class FileWriter:
 
     def write(self, data):
-        filename, data = data.split(b'\n\n', 1)
+        filename, data = data.split(b'\n', 1)
         with open(FILES_DIR / filename.decode(), 'wb') as f:
             f.write(data)
 
