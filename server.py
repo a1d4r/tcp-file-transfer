@@ -33,4 +33,4 @@ async def main(host, port):
     await server.serve_forever()
 
 
-asyncio.run(main('127.0.0.1', 5000))
+asyncio.run(main('', 5000))
