@@ -1,5 +1,6 @@
 import asyncio
 from pathlib import Path
+import os
 
 
 FILES_DIR = Path(__file__).parent.absolute() / 'server_files'
@@ -10,8 +11,20 @@ class FileWriter:
 
     def write(self, data):
         filename, data = data.split(b'\n', 1)
-        with open(FILES_DIR / filename.decode(), 'wb') as f:
+        filename = self.avoid_filename_collisions(filename.decode())
+        with open(FILES_DIR / filename, 'wb') as f:
             f.write(data)
+
+    def avoid_filename_collisions(self, filename):
+        if not (FILES_DIR / filename).exists():
+            return filename
+        name, ext = os.path.splitext(filename)
+        new_filename = f'{name}_copy{ext}'
+        copy_number = 0
+        while (FILES_DIR / new_filename).exists():
+            copy_number += 1
+            new_filename = f'{name}_copy{copy_number}{ext}'
+        return new_filename
 
 
 class FileTransferProtocol(asyncio.Protocol):
